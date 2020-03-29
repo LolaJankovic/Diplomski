@@ -12,7 +12,6 @@ public interface PisacRepository extends JpaRepository<Pisac, Long>{
 	List<Pisac> findByKnjigaIdAndDeletedIsFalse(Long id);
 	List<Pisac> findByZanrIdAndDeletedIsFalse(Long id);
 	List<Pisac> findAllByDeletedIsFalse();
-	Pisac findOneByDeletedIsFalse(Long id);
-	Pisac save(Pisac pisac);
+	Pisac findByIdAndDeletedIsFalse(Long id);
 	
 }

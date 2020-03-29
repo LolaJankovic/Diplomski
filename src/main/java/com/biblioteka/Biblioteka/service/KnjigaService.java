@@ -67,7 +67,7 @@ public class KnjigaService {
 
 //dobavi odredjenu
 	public Knjiga findOne(Long id) {
-		Knjiga knjiga = knjigaRepository.findOneByDeletedIsFalse(id);
+		Knjiga knjiga = knjigaRepository.findByIdAndDeletedIsFalse(id);
 		return knjiga;
 	}
 
@@ -79,7 +79,7 @@ public class KnjigaService {
 	}
 
 //pronadji po nazivu i piscu
-	public Knjiga findByKnjigaIdAndPisacId(Long idK, Long idP) {
+	public Knjiga findByIdAndPisacId(Long idK, Long idP) {
 		List<Knjiga> getAll = findAll();
 		Knjiga findBy = new Knjiga();
 		

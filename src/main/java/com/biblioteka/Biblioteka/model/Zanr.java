@@ -18,6 +18,33 @@ public class Zanr {
 
 	@OneToMany(mappedBy = "zanr")
 	private List<Knjiga> knjige;
+	
+	@OneToMany(mappedBy = "zanr")
+	private List<Pisac> pisci;
+
+	@ManyToOne
+	private Pisac pisac;
+	
+	
+	public Pisac getPisac() {
+		return pisac;
+	}
+
+	public void setPisac(Pisac pisac) {
+		this.pisac = pisac;
+	}
+
+	public List<Pisac> getPisci() {
+		return pisci;
+	}
+
+	public void setPisci(List<Pisac> pisci) {
+		this.pisci = pisci;
+	}
+
+	public Boolean getDeleted() {
+		return deleted;
+	}
 
 	public Boolean isDeleted() {
 		return deleted;

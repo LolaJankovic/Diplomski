@@ -44,7 +44,7 @@ public class ZaduzenjeService {
 //dobavi odredjenu
 	public Zaduzenje findOne(Long id) {
 		if(id!=null) {
-			Zaduzenje zaduzenje = zaduzenjeRepository.findOneByDeletedIsFalse(id);
+			Zaduzenje zaduzenje = zaduzenjeRepository.findByIdAndDeletedIsFalse(id);
 			return zaduzenje;
 		}
 		throw new IllegalArgumentException("nepostojeci");
@@ -67,5 +67,6 @@ public class ZaduzenjeService {
 		}
 		throw new IllegalArgumentException("nema zaduzenih korisnika");
 	}
+
 
 }

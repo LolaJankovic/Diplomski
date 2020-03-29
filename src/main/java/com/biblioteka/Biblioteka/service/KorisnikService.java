@@ -64,7 +64,7 @@ public class KorisnikService {
 //dobavi odredjenu
 	public Korisnik findOne(Long id) {
 		if(id!=null) {
-			Korisnik korisnik = korisnikRepository.findOneByDeletedIsFalse(id);
+			Korisnik korisnik = korisnikRepository.findByIdAndDeletedIsFalse(id);
 			return korisnik;
 		}
 		throw new IllegalArgumentException("Postojeci username");

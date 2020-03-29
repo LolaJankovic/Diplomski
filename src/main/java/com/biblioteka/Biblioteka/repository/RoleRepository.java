@@ -9,6 +9,5 @@ import com.biblioteka.Biblioteka.model.Role;
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long>{
 	List<Role> findAllByDeletedIsFalse();
-	Role findOneByDeletedIsFalse(Long id);
-	Role save(Role role);
+	Role findByIdAndDeletedIsFalse(Long id);
 }

@@ -25,7 +25,7 @@ public class IzdavacService {
 	@Transactional
 	public Izdavac findOne(Long id) {
 		if(id!=null) {
-			Izdavac izdavac = izdavacRepository.findOneByDeletedIsFalse(id);
+			Izdavac izdavac = izdavacRepository.findByIdAndDeletedIsFalse(id);
 			return izdavac;
 		}
 		

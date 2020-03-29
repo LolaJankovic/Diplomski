@@ -9,7 +9,6 @@ import com.biblioteka.Biblioteka.model.Izdavac;
 @Repository
 public interface IzdavacRepository extends JpaRepository<Izdavac, Long>{
 	List<Izdavac> findAllByDeletedIsFalse();
-	Izdavac findOneByDeletedIsFalse(Long id);
-	Izdavac save(Izdavac izdavac);
+	Izdavac findByIdAndDeletedIsFalse(Long id);
 	Izdavac findByNazivAndDeletedIsFalse(String naziv);
 }

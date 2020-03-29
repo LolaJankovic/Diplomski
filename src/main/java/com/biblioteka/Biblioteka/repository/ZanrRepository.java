@@ -9,7 +9,6 @@ import com.biblioteka.Biblioteka.model.Zanr;
 @Repository
 public interface ZanrRepository extends JpaRepository<Zanr, Long>{
 	List<Zanr> findAllByDeletedIsFalse();
-	Zanr findOneByDeletedIsFalse(Long id);
-	Zanr save(Zanr zanr);
+	Zanr findByIdAndDeletedIsFalse(Long id);
 	List<Zanr> findByPisacIdAndDeletedIsFalse(Long id);
 }

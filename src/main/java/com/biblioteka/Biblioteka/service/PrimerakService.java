@@ -50,7 +50,7 @@ public class PrimerakService {
 //dobavi odredjenu
 	public Primerak findOne(Long id) {
 		if(id!=null) {
-			Primerak primerak = primerakRepository.findOneByDeletedIsFalse(id);
+			Primerak primerak = primerakRepository.findByIdAndDeletedIsFalse(id);
 			return primerak;
 		}
 		throw new IllegalArgumentException("nepostojeci");
@@ -63,14 +63,5 @@ public class PrimerakService {
 		save(primerak);
 	}
 	
-	public List<Zaduzenje> findByKorisnikId(Long id){
-		List<Primerak> list = primerakRepository.findAll();
-		for(Primerak p : list) {
-			if(p.getZaduzenja().equals(findOne(id).getZaduzenja())) {
-				return p.getZaduzenja();
-			}
-		}
-		throw new IllegalArgumentException("nema zaduzenih primeraka");
-	}
 
 }

@@ -44,7 +44,7 @@ public class RoleService {
 //dobavi odredjenu
 	public Role findOne(Long id) {
 		if(id!=null) {
-			Role role = roleRepository.findOneByDeletedIsFalse(id);
+			Role role = roleRepository.findByIdAndDeletedIsFalse(id);
 			return role;
 		}
 		throw new IllegalArgumentException("Nepostojeci");

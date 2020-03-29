@@ -11,8 +11,7 @@ import com.biblioteka.Biblioteka.model.Zaduzenje;
 @Repository
 public interface ZaduzenjeRepository extends JpaRepository<Zaduzenje, Long> {
 	List<Zaduzenje> findAllByDeletedIsFalse();
-	Zaduzenje findOneByDeletedIsFalse(Long id);
-	Zaduzenje save(Zaduzenje zaduzenje);
+	Zaduzenje findByIdAndDeletedIsFalse(Long id);
 	List<Zaduzenje> findByKorisnikIdAndDeletedIsFalse(Long id);
 
 }

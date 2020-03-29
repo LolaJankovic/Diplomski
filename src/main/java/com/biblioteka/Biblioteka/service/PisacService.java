@@ -51,7 +51,7 @@ public class PisacService {
 
 //dobavi odredjenu
 	public Pisac findOne(Long id) {
-		Pisac pisac = pisacRepository.findOneByDeletedIsFalse(id);
+		Pisac pisac = pisacRepository.findByIdAndDeletedIsFalse(id);
 		return pisac;
 	}
 

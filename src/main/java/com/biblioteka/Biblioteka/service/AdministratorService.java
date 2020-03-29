@@ -32,12 +32,12 @@ public class AdministratorService {
 		if (!(administrator.getUsername()  instanceof String)) {
 			throw new IllegalArgumentException("neodgovarajuci tip podatka");
 		}
-		List<Administrator> getAll = findAll();
-		for(Administrator a : getAll) {
-			if(a.getEmail().equals(administrator.getEmail())) {
+		List<Administrator> adminList = findAll();
+		for(Administrator admin : adminList) {
+			if(admin.getEmail().equals(administrator.getEmail())) {
 				throw new IllegalArgumentException("Postojeca email adresa");
 			}
-			if(a.getUsername().equals(administrator.getUsername())) {
+			if(admin.getUsername().equals(administrator.getUsername())) {
 				throw new IllegalArgumentException("Postojeci username");
 			}
 		}
@@ -54,7 +54,7 @@ public class AdministratorService {
 //dobavi odredjenu
 	public Administrator findOne(Long id) {
 		if(id!=null) {
-			Administrator administrator = administratorRepository.findOneByDeletedIsFalse(id);
+			Administrator administrator = administratorRepository.findByIdAndDeletedIsFalse(id);
 			return administrator;
 		}
 		throw new IllegalArgumentException("Nepostojeci");

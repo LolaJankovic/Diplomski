@@ -23,6 +23,9 @@ public class Knjiga {
 
     @OneToMany(mappedBy = "knjiga")
     private List<Primerak> primerci;
+    
+    @OneToMany(mappedBy = "knjiga")
+    private List<Pisac> pisci;
 
     @ManyToOne
     @JoinColumn(name = "izdavac_id")
@@ -48,7 +51,15 @@ public class Knjiga {
         this.administrator = administrator;
     }
 
-    public Boolean getDeleted() {
+    public List<Pisac> getPisci() {
+		return pisci;
+	}
+
+	public void setPisci(List<Pisac> pisci) {
+		this.pisci = pisci;
+	}
+
+	public Boolean getDeleted() {
 		return deleted;
 	}
 

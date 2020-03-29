@@ -10,7 +10,7 @@ import com.biblioteka.Biblioteka.model.Osoba;
 @Repository
 public interface KorisnikRepository extends JpaRepository<Korisnik, Long> {
 	List<Korisnik> findAllByDeletedIsFalse();
-	Korisnik findOneByDeletedIsFalse(Long id);
+	Korisnik findByIdAndDeletedIsFalse(Long id);
 	Korisnik save(Korisnik Korisnik);
 	Korisnik findByEmailAndDeletedIsFalse(String email);
 	

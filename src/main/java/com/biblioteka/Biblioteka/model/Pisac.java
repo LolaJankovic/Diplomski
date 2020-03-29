@@ -22,11 +22,38 @@ public class Pisac {
     @ManyToOne
     @JoinColumn(name="drzava_id")
     private Drzava drzava;
+    
+    @ManyToOne
+    @JoinColumn(name="knjiga_id")
+    private Knjiga knjiga;
+    
+    @ManyToOne
+    @JoinColumn(name="zanr_id")
+    private Zanr zanr;
 
-    @OneToMany(mappedBy = "pisac")
+    public Zanr getZanr() {
+		return zanr;
+	}
+
+	public void setZanr(Zanr zanr) {
+		this.zanr = zanr;
+	}
+
+	@OneToMany(mappedBy = "pisac")
     private List<Knjiga> knjige;
+	
+	@OneToMany(mappedBy = "pisac")
+	private List<Zanr> zanrovi;
 
-    public Pisac() {
+    public List<Zanr> getZanrovi() {
+		return zanrovi;
+	}
+
+	public void setZanrovi(List<Zanr> zanrovi) {
+		this.zanrovi = zanrovi;
+	}
+
+	public Pisac() {
     }
 
     public Pisac(String ime, String prezime, Drzava drzava) {
@@ -35,7 +62,15 @@ public class Pisac {
         this.drzava = drzava;
     }
 
-    public Boolean getDeleted() {
+    public Knjiga getKnjiga() {
+		return knjiga;
+	}
+
+	public void setKnjiga(Knjiga knjiga) {
+		this.knjiga = knjiga;
+	}
+
+	public Boolean getDeleted() {
 		return deleted;
 	}
 

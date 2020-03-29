@@ -9,7 +9,6 @@ import com.biblioteka.Biblioteka.model.Osoba;
 @Repository
 public interface OsobaRepository extends JpaRepository<Osoba, Long> {
 	List<Osoba> findAllByDeletedIsFalse();
-	Osoba findOneByDeletedIsFalse(Long id);
-	Osoba save(Osoba osoba);
+	Osoba findByIdAndDeletedIsFalse(Long id);
 	Osoba findByEmailAndDeletedIsFalse(String email);
 }

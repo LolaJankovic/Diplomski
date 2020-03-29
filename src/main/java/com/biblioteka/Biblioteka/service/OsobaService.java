@@ -59,7 +59,7 @@ public class OsobaService {
 //dobavi odredjenu
 	public Osoba findOne(Long id) {
 		if(id!=null) {
-			Osoba osoba = osobaRepository.findOneByDeletedIsFalse(id);
+			Osoba osoba = osobaRepository.findByIdAndDeletedIsFalse(id);
 			return osoba;
 		}
 		throw new IllegalArgumentException("nepostojeci");

@@ -46,7 +46,7 @@ public class ZanrService {
 //dobavi odredjenu
 	public Zanr findOne(Long id) {
 		if(id!=null) {
-			Zanr zanr = zanrRepository.findOneByDeletedIsFalse(id);
+			Zanr zanr = zanrRepository.findByIdAndDeletedIsFalse(id);
 			return zanr;
 		}
 		throw new IllegalArgumentException("nepostojeci");

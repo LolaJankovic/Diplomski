@@ -42,7 +42,7 @@ public class DrzavaService {
 //dobavi odredjenu
 	public Drzava findOne(Long id) {
 		if(id!=null) {
-			Drzava drzava = drzavaRepository.findOneByDeletedIsFalse(id);
+			Drzava drzava = drzavaRepository.findByIdAndDeletedIsFalse(id);
 			return drzava;
 		}
 		throw new IllegalArgumentException("Ne postoji u bazi");

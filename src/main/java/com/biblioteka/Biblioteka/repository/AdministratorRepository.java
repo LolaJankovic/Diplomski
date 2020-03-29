@@ -10,7 +10,7 @@ import com.biblioteka.Biblioteka.model.Administrator;
 @Repository
 public interface AdministratorRepository extends JpaRepository<Administrator, Long> {
 	List<Administrator> findAllByDeletedIsFalse();
-	Administrator findOneByDeletedIsFalse(Long id);
-	Administrator save(Administrator administrator);
+	Administrator findByIdAndDeletedIsFalse(Long id);
+	
 	
 }
