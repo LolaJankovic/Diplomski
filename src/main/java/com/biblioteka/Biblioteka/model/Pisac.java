@@ -1,120 +1,107 @@
 package com.biblioteka.Biblioteka.model;
 
-import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Pisac {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    
-    @Column
-    private Boolean deleted;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Column(nullable = false)
-    private String ime;
+	@Column(nullable = false)
+	private String ime;
 
-    @Column(nullable = false)
-    private String prezime;
+	@Column(nullable = false)
+	private String prezime;
 
-    @ManyToOne
-    @JoinColumn(name="drzava_id")
-    private Drzava drzava;
-    
-    @ManyToOne
-    @JoinColumn(name="knjiga_id")
-    private Knjiga knjiga;
-    
-    @ManyToOne
-    @JoinColumn(name="zanr_id")
-    private Zanr zanr;
+	@ManyToOne
+	@JoinColumn(name = "drzava_id")
+	private Drzava drzava;
 
-    public Zanr getZanr() {
-		return zanr;
-	}
+	@JsonIgnore
+	@ManyToMany(mappedBy = "pisci")
+	private Set<Knjiga> knjige;
 
-	public void setZanr(Zanr zanr) {
-		this.zanr = zanr;
-	}
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "pisci_zanrovi", joinColumns = @JoinColumn(name = "pisac_id"), inverseJoinColumns = @JoinColumn(name = "zanr_id"))
+	private Set<Zanr> zanrovi;
 
-	@OneToMany(mappedBy = "pisac")
-    private List<Knjiga> knjige;
-	
-	@OneToMany(mappedBy = "pisac")
-	private List<Zanr> zanrovi;
-
-    public List<Zanr> getZanrovi() {
-		return zanrovi;
-	}
-
-	public void setZanrovi(List<Zanr> zanrovi) {
-		this.zanrovi = zanrovi;
-	}
+	@Column
+	private boolean deleted;
 
 	public Pisac() {
-    }
-
-    public Pisac(String ime, String prezime, Drzava drzava) {
-        this.ime = ime;
-        this.prezime = prezime;
-        this.drzava = drzava;
-    }
-
-    public Knjiga getKnjiga() {
-		return knjiga;
-	}
-
-	public void setKnjiga(Knjiga knjiga) {
-		this.knjiga = knjiga;
-	}
-
-	public Boolean getDeleted() {
-		return deleted;
-	}
-
-	public void setDeleted(Boolean deleted) {
-		this.deleted = deleted;
+		super();
+		this.deleted = false;
 	}
 
 	public Long getId() {
-        return id;
-    }
+		return id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getIme() {
-        return ime;
-    }
+	public String getIme() {
+		return ime;
+	}
 
-    public void setIme(String ime) {
-        this.ime = ime;
-    }
+	public void setIme(String ime) {
+		this.ime = ime;
+	}
 
-    public String getPrezime() {
-        return prezime;
-    }
+	public String getPrezime() {
+		return prezime;
+	}
 
-    public void setPrezime(String prezime) {
-        this.prezime = prezime;
-    }
+	public void setPrezime(String prezime) {
+		this.prezime = prezime;
+	}
 
-    public Drzava getDrzava() {
-        return drzava;
-    }
+	public Drzava getDrzava() {
+		return drzava;
+	}
 
-    public void setDrzava(Drzava drzava) {
-        this.drzava = drzava;
-    }
+	public void setDrzava(Drzava drzava) {
+		this.drzava = drzava;
+	}
 
-    public List<Knjiga> getKnjige() {
-        return knjige;
-    }
+	public Set<Knjiga> getKnjige() {
+		return knjige;
+	}
 
-    public void setKnjige(List<Knjiga> knjige) {
-        this.knjige = knjige;
-    }
+	public void setKnjige(Set<Knjiga> knjige) {
+		this.knjige = knjige;
+	}
+
+	public Set<Zanr> getZanrovi() {
+		return zanrovi;
+	}
+
+	public void setZanrovi(Set<Zanr> zanrovi) {
+		this.zanrovi = zanrovi;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+
 }

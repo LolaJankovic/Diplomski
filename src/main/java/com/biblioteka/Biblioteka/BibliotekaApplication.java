@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class BibliotekaApplication {
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(BibliotekaApplication.class, args);
 	}
-
 }

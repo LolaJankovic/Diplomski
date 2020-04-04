@@ -1,87 +1,96 @@
 package com.biblioteka.Biblioteka.model;
 
-import javax.persistence.*;
-import javax.validation.constraints.Email;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.validation.constraints.Email;
 
 @Entity
 public class Korisnik extends Osoba {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column
-    private Boolean deleted;
-    @Column(nullable = false)
-    private String adresa;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @OneToMany(mappedBy = "korisnik")
-    private List<Zaduzenje> zaduzenja;
+	@Column(nullable = false)
+	private String adresa;
 
-    private boolean aktiviran;
+	@OneToMany(mappedBy = "korisnik")
+	private List<Zaduzenje> zaduzenja;
 
-    private boolean obrisan;
+	private String registracioniLink;
 
-    public Korisnik() {
-        this.aktiviran = false;
-        this.obrisan = false;
-    }
+	@Column
+	private boolean aktiviran;
 
-    public Korisnik(@Email String email, String ime, String prezime, String username, String password, String adresa, List<Zaduzenje> zaduzenja, boolean aktiviran, boolean obrisan) {
-        super(email, ime, prezime, username, password);
-        this.adresa = adresa;
-        this.aktiviran = false;
-        this.obrisan = false;
-    }
-    
+	@Column
+	private boolean deleted;
 
-    public Boolean getDeleted() {
-		return deleted;
+	public Korisnik() {
+		this.aktiviran = false;
+		this.deleted = false;
 	}
 
-	public void setDeleted(Boolean deleted) {
-		this.deleted = deleted;
+	public Korisnik(@Email String email, String ime, String prezime, String username, String password, String adresa,
+			List<Zaduzenje> zaduzenja, boolean aktiviran, boolean obrisan) {
+		super(email, ime, prezime, username, password);
+		this.adresa = adresa;
+		this.aktiviran = false;
+		this.deleted = false;
 	}
 
 	@Override
-    public Long getId() {
-        return id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    @Override
-    public void setId(Long id) {
-        this.id = id;
-    }
+	@Override
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getAdresa() {
-        return adresa;
-    }
+	public String getAdresa() {
+		return adresa;
+	}
 
-    public void setAdresa(String adresa) {
-        this.adresa = adresa;
-    }
+	public void setAdresa(String adresa) {
+		this.adresa = adresa;
+	}
 
-    public List<Zaduzenje> getZaduzenja() {
-        return zaduzenja;
-    }
+	public List<Zaduzenje> getZaduzenja() {
+		return zaduzenja;
+	}
 
-    public void setZaduzenja(List<Zaduzenje> zaduzenja) {
-        this.zaduzenja = zaduzenja;
-    }
+	public void setZaduzenja(List<Zaduzenje> zaduzenja) {
+		this.zaduzenja = zaduzenja;
+	}
 
-    public boolean isAktiviran() {
-        return aktiviran;
-    }
+	public boolean isAktiviran() {
+		return aktiviran;
+	}
 
-    public void setAktiviran(boolean aktiviran) {
-        this.aktiviran = aktiviran;
-    }
+	public void setAktiviran(boolean aktiviran) {
+		this.aktiviran = aktiviran;
+	}
 
-    public boolean isObrisan() {
-        return obrisan;
-    }
+	public boolean getDeleted() {
+		return deleted;
+	}
 
-    public void setObrisan(boolean obrisan) {
-        this.obrisan = obrisan;
-    }
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+
+	public String getRegistracioniLink() {
+		return registracioniLink;
+	}
+
+	public void setRegistracioniLink(String registracioniLink) {
+		this.registracioniLink = registracioniLink;
+	}
 }

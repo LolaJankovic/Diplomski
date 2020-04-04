@@ -7,67 +7,89 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.biblioteka.Biblioteka.model.Administrator;
+import com.biblioteka.Biblioteka.dto.IzdavacDTO;
 import com.biblioteka.Biblioteka.model.Izdavac;
 import com.biblioteka.Biblioteka.repository.IzdavacRepository;
+
 @Service
 @Transactional
 public class IzdavacService {
+
 	@Autowired
 	IzdavacRepository izdavacRepository;
 
 	@Transactional
 	public List<Izdavac> findAll() {
-		List<Izdavac> lista = izdavacRepository.findAllByDeletedIsFalse();
-		return lista;
+
+		return izdavacRepository.findAllByDeletedIsFalse();
 	}
 
 	@Transactional
 	public Izdavac findOne(Long id) {
-		if(id!=null) {
-			Izdavac izdavac = izdavacRepository.findByIdAndDeletedIsFalse(id);
+
+		Izdavac izdavac = izdavacRepository.findByIdAndDeletedIsFalse(id);
+		if (izdavac != null) {
 			return izdavac;
 		}
-		
-		throw new IllegalArgumentException("Pokusaj brisanja nepostojeceg");
+
+		throw new IllegalArgumentException("Trazeni izdavac ne postoji");
 	}
 
 	@Transactional
-	public Izdavac save(Izdavac izdavac) {
-		if (!(izdavac.getGrad()  instanceof String)) {
-			throw new IllegalArgumentException("neodgovarajuci tip podatka");
+	public Izdavac findByNaziv(String naziv) {
+
+		Izdavac izdavac = izdavacRepository.findByNazivAndDeletedIsFalse(naziv);
+		if (izdavac != null) {
+			return izdavac;
 		}
-		if (!(izdavac.getNaziv()  instanceof String)) {
-			throw new IllegalArgumentException("neodgovarajuci tip podatka");
-		}
-		
+
+		throw new IllegalArgumentException("Izdavac sa tim imenom ne postoji");
+	}
+
+	@Transactional
+	public Izdavac save(IzdavacDTO izdavacDto) {
+
 		List<Izdavac> getAll = findAll();
-		for(Izdavac i : getAll) {
-			if(i.getNaziv().equals(izdavac.getNaziv())) {
+		for (Izdavac izdavac : getAll) {
+			if (izdavac.getNaziv().equals(izdavacDto.getNaziv())) {
 				throw new IllegalArgumentException("Postojeci izdavac");
 			}
 		}
+
+		Izdavac izdavac = new Izdavac();
+		izdavac.setNaziv(izdavacDto.getNaziv());
+		izdavac.setGrad(izdavacDto.getGrad());
+
 		return izdavacRepository.save(izdavac);
 	}
 
 	@Transactional
-	public void delete(Long id) {
-		Izdavac izdavac = findOne(id);
-		izdavac.setDeleted(true);
-		save(izdavac);
+	public Izdavac update(Izdavac izdavac) {
 
+		Izdavac noviIzdavac = izdavacRepository.findByIdAndDeletedIsFalse(izdavac.getId());
+		if (noviIzdavac != null) {
+
+			noviIzdavac.setGrad(izdavac.getGrad());
+			noviIzdavac.setNaziv(izdavac.getNaziv());
+
+			return izdavac;
+		}
+
+		throw new IllegalArgumentException("Pokusaj azuriranja nepostojeceg");
 	}
-	
-	Izdavac findByNazivAndDeletedIsFalse(String naziv) {
-		List<Izdavac> getAll = findAll();
-		if(naziv instanceof String) {
-			
+
+	@Transactional
+	public boolean delete(Long id) {
+
+		Izdavac izdavac = izdavacRepository.findByIdAndDeletedIsFalse(id);
+		if (izdavac != null) {
+
+			izdavac.setDeleted(true);
+			izdavacRepository.save(izdavac);
+
+			return true;
 		}
-		for(Izdavac i : getAll) {
-				if(i.getNaziv().equalsIgnoreCase(naziv)) {
-				return i;
-			}
-		}
+
 		throw new IllegalArgumentException("Pokusaj brisanja nepostojeceg");
 	}
 

@@ -6,9 +6,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.biblioteka.Biblioteka.model.Zanr;
+
 @Repository
-public interface ZanrRepository extends JpaRepository<Zanr, Long>{
+public interface ZanrRepository extends JpaRepository<Zanr, Long> {
+
 	List<Zanr> findAllByDeletedIsFalse();
+
 	Zanr findByIdAndDeletedIsFalse(Long id);
-	List<Zanr> findByPisacIdAndDeletedIsFalse(Long id);
+
+	Zanr findByNazivAndDeletedIsFalse(String naziv);
 }

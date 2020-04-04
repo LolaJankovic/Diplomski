@@ -1,40 +1,70 @@
 package com.biblioteka.Biblioteka.model;
 
-import javax.persistence.*;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Izdavac {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column
-    private Boolean deleted;
-    @Column(nullable = false)
-    private String naziv;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Column(nullable = false)
-    private String grad;
+	@Column(nullable = false)
+	private String naziv;
 
-    @OneToMany(mappedBy = "izdavac")
-    private List<Knjiga> knjige;
+	@Column(nullable = false)
+	private String grad;
 
-    public Izdavac() {}
+	@JsonIgnore
+	@OneToMany(mappedBy = "izdavac")
+	private List<Knjiga> knjige;
 
-    public Izdavac(Long id, String naziv, String grad, List<Knjiga> knjiga) {
-        this.id = id;
-        this.naziv = naziv;
-        this.grad = grad;
-        this.knjige = knjiga;
-    }
+	@Column
+	private boolean deleted;
 
-    public Boolean getDeleted() {
-		return deleted;
+	public Izdavac() {
+		this.deleted = false;
 	}
 
-	public void setDeleted(Boolean deleted) {
-		this.deleted = deleted;
+	public Izdavac(Long id, String naziv, String grad, List<Knjiga> knjige) {
+		this.id = id;
+		this.naziv = naziv;
+		this.grad = grad;
+		this.knjige = knjige;
+		this.deleted = false;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getNaziv() {
+		return naziv;
+	}
+
+	public void setNaziv(String naziv) {
+		this.naziv = naziv;
+	}
+
+	public String getGrad() {
+		return grad;
+	}
+
+	public void setGrad(String grad) {
+		this.grad = grad;
 	}
 
 	public List<Knjiga> getKnjige() {
@@ -45,35 +75,12 @@ public class Izdavac {
 		this.knjige = knjige;
 	}
 
-	public Long getId() {
-        return id;
-    }
+	public boolean getDeleted() {
+		return deleted;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
 
-    public String getNaziv() {
-        return naziv;
-    }
-
-    public void setNaziv(String naziv) {
-        this.naziv = naziv;
-    }
-
-    public String getGrad() {
-        return grad;
-    }
-
-    public void setGrad(String grad) {
-        this.grad = grad;
-    }
-
-    public List<Knjiga> getKnjiga() {
-        return knjige;
-    }
-
-    public void setKnjiga(List<Knjiga> knjiga) {
-        this.knjige = knjiga;
-    }
 }

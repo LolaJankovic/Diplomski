@@ -9,8 +9,6 @@ import com.biblioteka.Biblioteka.model.Administrator;
 
 @Repository
 public interface AdministratorRepository extends JpaRepository<Administrator, Long> {
-	List<Administrator> findAllByDeletedIsFalse();
-	Administrator findByIdAndDeletedIsFalse(Long id);
-	
-	
+
+	List<Administrator> findAll();
 }

@@ -1,7 +1,17 @@
 package com.biblioteka.Biblioteka.model;
 
-import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Zanr {
@@ -10,55 +20,29 @@ public class Zanr {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column
-	private Boolean deleted;
-
 	@Column(nullable = false, unique = true)
 	private String naziv;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "zanr")
 	private List<Knjiga> knjige;
-	
-	@OneToMany(mappedBy = "zanr")
-	private List<Pisac> pisci;
 
-	@ManyToOne
-	private Pisac pisac;
-	
-	
-	public Pisac getPisac() {
-		return pisac;
-	}
+	@JsonIgnore
+	@ManyToMany(mappedBy = "zanrovi")
+	private Set<Pisac> pisci;
 
-	public void setPisac(Pisac pisac) {
-		this.pisac = pisac;
-	}
+	@Column
+	private boolean deleted;
 
-	public List<Pisac> getPisci() {
-		return pisci;
-	}
-
-	public void setPisci(List<Pisac> pisci) {
-		this.pisci = pisci;
-	}
-
-	public Boolean getDeleted() {
-		return deleted;
-	}
-
-	public Boolean isDeleted() {
-		return deleted;
-	}
-
-	public void setDeleted(Boolean deleted) {
-		this.deleted = deleted;
+	public Zanr(String naziv, List<Knjiga> knjige, List<Pisac> pisci) {
+		super();
+		this.naziv = naziv;
+		this.knjige = knjige;
+		this.deleted = false;
 	}
 
 	public Zanr() {
-	}
-
-	public Zanr(String naziv) {
-		this.naziv = naziv;
+		this.deleted = false;
 	}
 
 	public Long getId() {
@@ -83,5 +67,21 @@ public class Zanr {
 
 	public void setKnjige(List<Knjiga> knjige) {
 		this.knjige = knjige;
+	}
+
+	public Set<Pisac> getPisci() {
+		return pisci;
+	}
+
+	public void setPisci(Set<Pisac> pisci) {
+		this.pisci = pisci;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 }

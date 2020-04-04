@@ -1,28 +1,58 @@
 package com.biblioteka.Biblioteka.model;
 
-import javax.persistence.*;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Drzava {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column
-    private Boolean deleted;
-    @Column(nullable = false)
-    private String naziv;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @OneToMany(mappedBy="drzava")
-    private List<Pisac> pisci;
+	@Column(nullable = false)
+	private String naziv;
 
-    public Boolean getDeleted() {
-		return deleted;
+	@JsonIgnore
+	@OneToMany(mappedBy = "drzava")
+	private List<Pisac> pisci;
+
+	@Column
+	private boolean deleted;
+
+	public Drzava() {
+		this.deleted = false;
 	}
 
-	public void setDeleted(Boolean deleted) {
-		this.deleted = deleted;
+	public Drzava(String naziv) {
+		this.naziv = naziv;
+		this.deleted = false;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getNaziv() {
+		return naziv;
+	}
+
+	public void setNaziv(String naziv) {
+		this.naziv = naziv;
 	}
 
 	public List<Pisac> getPisci() {
@@ -33,26 +63,12 @@ public class Drzava {
 		this.pisci = pisci;
 	}
 
-	public Drzava() {
-    }
+	public boolean getDeleted() {
+		return deleted;
+	}
 
-    public Drzava(String naziv) {
-        this.naziv = naziv;
-    }
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNaziv() {
-        return naziv;
-    }
-
-    public void setNaziv(String naziv) {
-        this.naziv = naziv;
-    }
 }

@@ -1,50 +1,45 @@
 package com.biblioteka.Biblioteka.model;
 
-import javax.persistence.*;
-import javax.validation.constraints.Email;
 import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Administrator extends Osoba {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column
-    private Boolean deleted;
-    @OneToMany(mappedBy = "administrator")
-    private List<Knjiga> knjige;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    public Administrator() {
-    }
+	@OneToMany(mappedBy = "administrator")
+	private List<Knjiga> knjige;
 
-    public Administrator(@Email String email, String ime, String prezime, String username, String password) {
-        super(email, ime, prezime, username, password);
-    }
-    
-    public Boolean getDeleted() {
-		return deleted;
+	public Administrator() {
 	}
 
-	public void setDeleted(Boolean deleted) {
-		this.deleted = deleted;
+	public Administrator(String email, String ime, String prezime, String username, String password) {
+		super(email, ime, prezime, username, password);
 	}
 
 	@Override
-    public Long getId() {
-        return id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    @Override
-    public void setId(Long id) {
-        this.id = id;
-    }
+	@Override
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public List<Knjiga> getKnjige() {
-        return knjige;
-    }
+	public List<Knjiga> getKnjige() {
+		return knjige;
+	}
 
-    public void setKnjige(List<Knjiga> knjige) {
-        this.knjige = knjige;
-    }
+	public void setKnjige(List<Knjiga> knjige) {
+		this.knjige = knjige;
+	}
 }

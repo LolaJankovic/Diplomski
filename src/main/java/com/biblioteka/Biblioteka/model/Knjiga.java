@@ -1,133 +1,142 @@
 package com.biblioteka.Biblioteka.model;
 
-import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Knjiga {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column
-    private Boolean deleted;
-    @Column(nullable = false)
-    private String naziv;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Column(nullable = false)
-    private String godinaIzdavanja;
+	@Column(nullable = false)
+	private String naziv;
 
-    @ManyToOne
-    @JoinColumn(name = "pisac_id")
-    private Pisac pisac;
+	@Column(nullable = false)
+	private String godinaIzdavanja;
 
-    @OneToMany(mappedBy = "knjiga")
-    private List<Primerak> primerci;
-    
-    @OneToMany(mappedBy = "knjiga")
-    private List<Pisac> pisci;
+	@OneToMany(mappedBy = "knjiga")
+	private List<Primerak> primerci;
 
-    @ManyToOne
-    @JoinColumn(name = "izdavac_id")
-    private Izdavac izdavac;
+	@ManyToOne
+	@JoinColumn(name = "izdavac_id")
+	private Izdavac izdavac;
 
-    @ManyToOne
-    @JoinColumn(name = "zanr_id")
-    private Zanr zanr;
+	@ManyToOne
+	@JoinColumn(name = "zanr_id")
+	private Zanr zanr;
 
-    @ManyToOne
-    @JoinColumn(name = "admin_id")
-    private Administrator administrator;
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "pisci_knjige", joinColumns = @JoinColumn(name = "knjiga_id"), inverseJoinColumns = @JoinColumn(name = "pisac_id"))
+	private Set<Pisac> pisci;
 
-    public Knjiga() {}
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "admin_id")
+	private Administrator administrator;
 
-    public Knjiga(String naziv, String godinaIzdavanja, Pisac pisac, List<Primerak> primerci, Izdavac izdavac, Zanr zanr, Administrator administrator) {
-        this.naziv = naziv;
-        this.godinaIzdavanja = godinaIzdavanja;
-        this.pisac = pisac;
-        this.primerci = primerci;
-        this.izdavac = izdavac;
-        this.zanr = zanr;
-        this.administrator = administrator;
-    }
+	@Column
+	private boolean deleted;
 
-    public List<Pisac> getPisci() {
-		return pisci;
+	public Knjiga() {
+		this.deleted = false;
 	}
 
-	public void setPisci(List<Pisac> pisci) {
-		this.pisci = pisci;
-	}
-
-	public Boolean getDeleted() {
-		return deleted;
-	}
-
-	public void setDeleted(Boolean deleted) {
-		this.deleted = deleted;
+	public Knjiga(String naziv, String godinaIzdavanja, Pisac pisac, List<Primerak> primerci, Izdavac izdavac,
+			Zanr zanr, Administrator administrator) {
+		this.naziv = naziv;
+		this.godinaIzdavanja = godinaIzdavanja;
+		this.primerci = primerci;
+		this.izdavac = izdavac;
+		this.zanr = zanr;
+		this.administrator = administrator;
+		this.deleted = false;
 	}
 
 	public Long getId() {
-        return id;
-    }
+		return id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getNaziv() {
-        return naziv;
-    }
+	public String getNaziv() {
+		return naziv;
+	}
 
-    public void setNaziv(String naziv) {
-        this.naziv = naziv;
-    }
+	public void setNaziv(String naziv) {
+		this.naziv = naziv;
+	}
 
-    public String getGodinaIzdavanja() {
-        return godinaIzdavanja;
-    }
+	public String getGodinaIzdavanja() {
+		return godinaIzdavanja;
+	}
 
-    public void setGodinaIzdavanja(String godinaIzdavanja) {
-        this.godinaIzdavanja = godinaIzdavanja;
-    }
+	public void setGodinaIzdavanja(String godinaIzdavanja) {
+		this.godinaIzdavanja = godinaIzdavanja;
+	}
 
-    public Pisac getPisac() {
-        return pisac;
-    }
+	public List<Primerak> getPrimerci() {
+		return primerci;
+	}
 
-    public void setPisac(Pisac pisac) {
-        this.pisac = pisac;
-    }
+	public void setPrimerci(List<Primerak> primerci) {
+		this.primerci = primerci;
+	}
 
-    public List<Primerak> getPrimerci() {
-        return primerci;
-    }
+	public Izdavac getIzdavac() {
+		return izdavac;
+	}
 
-    public void setPrimerci(List<Primerak> primerci) {
-        this.primerci = primerci;
-    }
+	public void setIzdavac(Izdavac izdavac) {
+		this.izdavac = izdavac;
+	}
 
-    public Izdavac getIzdavac() {
-        return izdavac;
-    }
+	public Set<Pisac> getPisci() {
+		return pisci;
+	}
 
-    public void setIzdavac(Izdavac izdavac) {
-        this.izdavac = izdavac;
-    }
+	public void setPisci(Set<Pisac> pisci) {
+		this.pisci = pisci;
+	}
 
-    public Zanr getZanr() {
-        return zanr;
-    }
+	public Zanr getZanr() {
+		return zanr;
+	}
 
-    public void setZanr(Zanr zanr) {
-        this.zanr = zanr;
-    }
+	public void setZanr(Zanr zanr) {
+		this.zanr = zanr;
+	}
 
-    public Administrator getAdministrator() {
-        return administrator;
-    }
+	public Administrator getAdministrator() {
+		return administrator;
+	}
 
-    public void setAdministrator(Administrator administrator) {
-        this.administrator = administrator;
-    }
+	public void setAdministrator(Administrator administrator) {
+		this.administrator = administrator;
+	}
+
+	public boolean getDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
 }

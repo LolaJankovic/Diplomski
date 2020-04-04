@@ -11,70 +11,60 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Zaduzenje {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    
-    @Column
-    private Boolean deleted;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Column(nullable = false)
-    private boolean zaduzena;
+	@ManyToOne
+	@JoinColumn(name = "korisnik_id")
+	private Korisnik korisnik;
 
-    @ManyToOne
-    @JoinColumn(name = "korisnik_id")
-    private Korisnik korisnik;
+	@ManyToOne
+	@JoinColumn(name = "primerak_id")
+	private Primerak primerak;
 
-    @ManyToOne
-    @JoinColumn(name = "primerak_id")
-    private Primerak primerak;
+	@Column
+	private boolean deleted;
 
-    public Zaduzenje() {}
-
-    public Zaduzenje(boolean zaduzena, Korisnik korisnik, Primerak primerak) {
-        this.zaduzena = zaduzena;
-        this.korisnik = korisnik;
-        this.primerak = primerak;
-    }
-    
-
-    public Boolean getDeleted() {
-		return deleted;
+	public Zaduzenje() {
+		this.deleted = false;
 	}
 
-	public void setDeleted(Boolean deleted) {
-		this.deleted = deleted;
+	public Zaduzenje(Korisnik korisnik, Primerak primerak) {
+		this.korisnik = korisnik;
+		this.primerak = primerak;
+		this.deleted = false;
 	}
 
 	public Long getId() {
-        return id;
-    }
+		return id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public boolean isZaduzena() {
-        return zaduzena;
-    }
+	public Korisnik getKorisnik() {
+		return korisnik;
+	}
 
-    public void setZaduzena(boolean zaduzena) {
-        this.zaduzena = zaduzena;
-    }
+	public void setKorisnik(Korisnik korisnik) {
+		this.korisnik = korisnik;
+	}
 
-    public Korisnik getKorisnik() {
-        return korisnik;
-    }
+	public Primerak getPrimerak() {
+		return primerak;
+	}
 
-    public void setKorisnik(Korisnik korisnik) {
-        this.korisnik = korisnik;
-    }
+	public void setPrimerak(Primerak primerak) {
+		this.primerak = primerak;
+	}
 
-    public Primerak getPrimerak() {
-        return primerak;
-    }
+	public boolean getDeleted() {
+		return deleted;
+	}
 
-    public void setPrimerak(Primerak primerak) {
-        this.primerak = primerak;
-    }
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
 }
